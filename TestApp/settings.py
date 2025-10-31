@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-&)*y9_@_zbn_3eq82%@!wfa&onq!q@6zwpu_s7piqo@vju#u0g
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -155,3 +155,8 @@ JAZZMIN_SETTINGS = {
 }
 
 LOGOUT_REDIRECT_URL = '/OTS/'
+
+
+from pathlib import Path
+BASE_DIR = Path(__file__).resolve().parent.parent
+STATIC_ROOT = BASE_DIR / 'staticfiles'
