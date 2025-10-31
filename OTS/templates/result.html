@@ -1,0 +1,205 @@
+{% extends "base.html" %}
+
+{% block title %}OTS - Test Result{% endblock %}
+
+{% block top %}
+<ul class="navbar-nav">
+    <li class="nav-item mx-2">
+        <a class="nav-link text-warning fw-semibold" href="{% url 'home' %}">Dashboard</a>
+    </li>
+    <li class="nav-item mx-2">
+        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+    </li>
+</ul>
+{% endblock %}
+
+{% block content %}
+<section class="result-section d-flex align-items-center justify-content-center text-light">
+    <div class="result-container text-center p-5 rounded-4 shadow-lg">
+        <h2 class="fw-bold text-warning mb-4">🎉 Your Test Result 🎉</h2>
+
+        {% for r in result %}
+        <div class="table-responsive mb-4">
+            <table class="table table-dark table-bordered table-hover align-middle mb-0">
+                <thead class="table-warning text-dark">
+                    <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Attempt</th>
+                        <th>Right</th>
+                        <th>Wrong</th>
+                        <th>Points</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ r.date }}</td>
+                        <td>{{ r.time }}</td>
+                        <td>{{ r.attempt }}</td>
+                        <td class="text-success fw-semibold">{{ r.right }}</td>
+                        <td class="text-danger fw-semibold">{{ r.wrong }}</td>
+                        <td class="text-warning fw-bold">{{ r.points }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Progress Bar -->
+        {% if r.attempt > 0 %}
+        <div class="score-box bg-dark rounded-3 p-4 mt-4 shadow-sm">
+            <h5 class="text-warning mb-3">📈 Performance Overview</h5>
+            <div class="progress" style="height: 25px;">
+                <div class="progress-bar bg-warning progress-bar-striped progress-bar-animated"
+                    #style="width: {{ r.points }}%" aria-valuenow="{{ r.points }}" aria-valuemin="0"
+                    aria-valuemax="100">
+                    {{ r.points }}%
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Motivational Message -->
+        <p class="fs-5 fw-semibold mt-4 px-2">
+            {% if r.points >= 80 %}
+            🌟 Excellent work! You’re an OTS Champion!
+            {% elif r.points >= 50 %}
+            👍 Good job! Keep practicing to reach the top.
+            {% else %}
+            💪 Don’t worry! Every expert was once a beginner — keep going!
+            {% endif %}
+        </p>
+
+        <!-- Buttons -->
+        <div class="mt-4 d-flex flex-wrap justify-content-center gap-3">
+            <a href="{% url 'home' %}" class="btn btn-warning fw-semibold px-4 py-2">🏠 Dashboard</a>
+            <a href="{% url 'testHistory' %}" class="btn btn-outline-light px-4 py-2">📜 View Test History</a>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<style>
+    .result-section {
+        min-height: 100vh;
+        background:
+            linear-gradient(rgba(0, 0, 0, 0.88), rgba(0, 0, 0, 0.90)),
+            url('https://images.unsplash.com/photo-1605902711622-cfb43c4437b5?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+        padding: 60px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .result-container {
+        width: 100%;
+        max-width: 800px;
+        background: rgba(20, 20, 20, 0.92);
+        border: 1px solid #333;
+        box-shadow: 0 0 25px rgba(255, 153, 0, 0.2);
+        animation: fadeUp 0.8s ease;
+    }
+
+    .table th,
+    .table td {
+        vertical-align: middle;
+        text-align: center;
+        font-size: 0.95rem;
+    }
+
+    .score-box {
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .progress-bar {
+        font-weight: bold;
+        color: #111;
+    }
+
+    .btn-warning {
+        background: linear-gradient(45deg, #ff6600, #ff9d00);
+        border: none;
+        transition: all 0.3s ease;
+    }
+
+    .btn-warning:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 0 10px rgba(255, 153, 0, 0.5);
+    }
+
+    .btn-outline-light:hover {
+        background: #ff6600;
+        border-color: #ff6600;
+    }
+
+    @keyframes fadeUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* 📱 Mobile Responsive Styles */
+    @media (max-width: 768px) {
+        .result-container {
+            padding: 25px 15px;
+        }
+
+        .table {
+            font-size: 0.85rem;
+        }
+
+        .result-section {
+            padding: 30px 10px;
+        }
+
+        .score-box {
+            padding: 20px;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+        }
+
+        .fs-5 {
+            font-size: 1rem !important;
+        }
+
+        .btn {
+            width: 100%;
+            max-width: 280px;
+            margin: 0 auto;
+        }
+    }
+
+    /* Small devices (≤480px) */
+    @media (max-width: 480px) {
+
+        .table th,
+        .table td {
+            font-size: 0.75rem;
+            padding: 6px;
+        }
+
+        .result-container {
+            padding: 20px 10px;
+        }
+
+        h2 {
+            font-size: 1.3rem;
+        }
+
+        .progress {
+            height: 20px;
+        }
+
+        .btn {
+            font-size: 0.9rem;
+        }
+    }
+</style>
+{% endblock %}

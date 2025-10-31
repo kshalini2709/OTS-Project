@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+
+{% block title %}Online Test - OTS{% endblock %}
+
+{% block content %}
+<section class="test-section">
+    <div class="container py-5" data-total-questions="{{ questions|length }}">
+        <div class="test-header d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+            <h2 class="fw-bold text-warning mb-0">📝 Online Test</h2>
+            <div id="timer" class="timer fw-semibold text-light">⏳ Time Left: <span id="time">--:--</span></div>
+        </div>
+
+        <form action="{% url 'calculateResult' %}" method="POST" class="test-form">
+            {% csrf_token %}
+
+            {% for question in questions %}
+            <div class="question-card shadow-lg p-4 mb-4 rounded-4">
+                <h5 class="text-light mb-3">
+                    <span class="text-warning">Q{{ forloop.counter }}.</span> {{ question.que }}
+                </h5>
+                <input type="hidden" name="qno{{ forloop.counter }}" value="{{ question.qid }}">
+
+                <div class="options-list">
+                    <label class="option d-block p-2 rounded-3">
+                        <input type="radio" name="q{{question.qid}}" value="a">
+                        <span>{{ question.a }}</span>
+                    </label>
+                    <label class="option d-block p-2 rounded-3">
+                        <input type="radio" name="q{{question.qid}}" value="b">
+                        <span>{{ question.b }}</span>
+                    </label>
+                    <label class="option d-block p-2 rounded-3">
+                        <input type="radio" name="q{{question.qid}}" value="c">
+                        <span>{{ question.c }}</span>
+                    </label>
+                    <label class="option d-block p-2 rounded-3">
+                        <input type="radio" name="q{{question.qid}}" value="d">
+                        <span>{{ question.d }}</span>
+                    </label>
+                </div>
+            </div>
+            {% endfor %}
+
+            <div class="text-center mt-5">
+                <button type="submit" class="btn btn-warning px-5 py-2 fw-semibold shadow">Submit Test</button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<style>
+    .test-section {
+        min-height: 100vh;
+        background:
+            linear-gradient(rgba(0, 0, 0, 0.88), rgba(0, 0, 0, 0.95)),
+            url('https://images.unsplash.com/photo-1503264116251-35a269479413?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+        color: #fff;
+        padding: 60px 0;
+    }
+
+    .test-header {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        padding: 15px 20px;
+        border-radius: 12px;
+    }
+
+    .timer {
+        background: rgba(255, 165, 0, 0.15);
+        padding: 8px 16px;
+        border-radius: 8px;
+    }
+
+    .question-card {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: transform 0.2s ease;
+    }
+
+    .question-card:hover {
+        transform: translateY(-3px);
+    }
+
+    .option {
+        background: rgba(255, 255, 255, 0.08);
+        margin-bottom: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .option:hover {
+        background: rgba(255, 153, 0, 0.3);
+        transform: translateX(5px);
+    }
+
+    .option input[type="radio"] {
+        margin-right: 10px;
+        accent-color: #ff9900;
+    }
+
+    .btn-warning {
+        background: linear-gradient(45deg, #ff6600, #ff9900);
+        border: none;
+        transition: all 0.3s ease;
+    }
+
+    .btn-warning:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 15px rgba(255, 153, 0, 0.6);
+    }
+
+    /* 🧱 Responsive Fixes */
+    @media (max-width: 768px) {
+        .test-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .test-section {
+            background-attachment: scroll;
+            background-position: center top;
+            background-size: cover;
+        }
+
+        .question-card {
+            padding: 1.2rem;
+        }
+
+        .btn-warning {
+            width: 100%;
+            padding: 12px;
+        }
+    }
+</style>
+
+<script>
+    // --- Dynamic Timer Based on Number of Questions ---
+    const container = document.querySelector('.container.py-5');
+    const totalQuestions = parseInt(container?.dataset.totalQuestions || '0', 10) || 0;
+    // 1.5 minutes per question
+    let totalSeconds = Math.ceil(totalQuestions * 90);
+
+    const timerDisplay = document.getElementById("time");
+
+    function updateTimer() {
+        const minutes = Math.floor(totalSeconds / 60);
+        const seconds = totalSeconds % 60;
+        timerDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        totalSeconds--;
+
+        if (totalSeconds < 0) {
+            clearInterval(countdown);
+            document.querySelector(".test-form").submit();
+        }
+    }
+
+    updateTimer(); // initialize display
+    const countdown = setInterval(updateTimer, 1000);
+</script>
+
+{% block footer %}
+<style>
+    footer {
+        display: none !important;
+    }
+</style>
+{% endblock %}
+
+{% endblock %}

@@ -1,0 +1,272 @@
+{% extends "base.html" %}
+
+{% block title %}OTS - Login{% endblock %}
+
+{% block top %}
+<ul class="navbar-nav">
+    <li class="nav-item mx-2">
+        <a class="nav-link" href="{% url 'welcome' %}">Home</a>
+    </li>
+    <li class="nav-item mx-2">
+        <a class="nav-link" href="{% url 'registrationForm' %}">Register</a>
+    </li>
+</ul>
+{% endblock %}
+
+{% block content %}
+<style>
+    /* ====== Global Layout ====== */
+    .login-container {
+        display: flex;
+        min-height: 90vh;
+        color: #fff;
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(135deg, #0d0d0d, #1a1a1a);
+        overflow: hidden;
+    }
+
+    /* ====== Left Side ====== */
+    .login-left {
+        flex: 1;
+        background: url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        color: #fff;
+        padding: 4rem 2rem;
+    }
+
+    .login-left::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.75);
+        backdrop-filter: blur(5px);
+    }
+
+    .login-left-content {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        max-width: 450px;
+    }
+
+    .login-left-content img {
+        max-width: 80%;
+        border-radius: 15px;
+        margin-bottom: 20px;
+        box-shadow: 0 0 20px rgba(255, 102, 0, 0.3);
+        transition: transform 0.4s ease;
+    }
+
+    .login-left-content img:hover {
+        transform: scale(1.05);
+    }
+
+    .login-left-content h1 {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #ff9d00;
+        margin-bottom: 10px;
+    }
+
+    .login-left-content p {
+        font-size: 1.1rem;
+        color: #ddd;
+    }
+
+    /* ====== Right Side (Glass Login Box) ====== */
+    .login-right {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 50px 0;
+        background: url('https://www.transparenttextures.com/patterns/dark-mosaic.png') repeat;
+    }
+
+    .login-box {
+        width: 90%;
+        max-width: 420px;
+        padding: 40px;
+        border-radius: 15px;
+        background: rgba(255, 255, 255, 0.08);
+        box-shadow: 0 0 25px rgba(255, 102, 0, 0.2);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        animation: fadeIn 1s ease;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(15px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .login-box h2 {
+        text-align: center;
+        margin-bottom: 25px;
+        color: #ffb347;
+        font-weight: 600;
+        letter-spacing: 1px;
+    }
+
+    .login-box .form-label {
+        font-weight: 500;
+        color: #ff9d00;
+    }
+
+    .login-box .form-control {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        color: #fff;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .login-box .form-control:focus {
+        outline: none;
+        border-color: #ffb347;
+        box-shadow: 0 0 8px #ff7300;
+    }
+
+    .login-box button {
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        padding: 10px 25px;
+        transition: 0.3s;
+    }
+
+    .login-box .btn-warning {
+        background: linear-gradient(135deg, #ff7300, #ffb347);
+        color: #fff;
+    }
+
+    .login-box .btn-warning:hover {
+        transform: scale(1.05);
+        background: linear-gradient(135deg, #ffb347, #ff7300);
+    }
+
+    .login-box .btn-outline-light {
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        color: #fff;
+    }
+
+    .login-box .btn-outline-light:hover {
+        background: #ff6600;
+        border-color: #ff6600;
+    }
+
+    .login-box a {
+        color: #ffb347;
+        text-decoration: none;
+        transition: 0.3s;
+    }
+
+    .login-box a:hover {
+        color: #fff;
+        text-decoration: underline;
+    }
+
+    /* ====== Responsive (Opposite of Registration) ====== */
+    @media (max-width: 992px) {
+        .login-container {
+            flex-direction: column;
+        }
+
+        .login-left {
+            padding: 60px 20px 40px 20px;
+        }
+
+        .login-right {
+            padding: 20px;
+        }
+
+        .login-box {
+            margin-top: 30px;
+            width: 95%;
+            padding: 30px 25px;
+        }
+
+        .login-left-content h1 {
+            font-size: 1.8rem;
+        }
+
+        .login-left-content p {
+            font-size: 1rem;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .login-left {
+            padding: 40px 15px;
+        }
+
+        .login-left-content h1 {
+            font-size: 1.6rem;
+        }
+
+        .login-left-content p {
+            font-size: 0.95rem;
+        }
+
+        .login-box {
+            padding: 25px 20px;
+        }
+    }
+</style>
+
+<div class="login-container">
+    <!-- Left Side -->
+    <div class="login-left">
+        <div class="login-left-content">
+            <img src="https://img.freepik.com/free-vector/online-learning-concept-illustration_114360-4767.jpg?w=826&t=st=1730039332~exp=1730042932~hmac=1572b0ecfb408d3a9da06293b67e1d3d7a1637b88579ac69e94f89e6ac6f7c3d"
+                alt="OTS Illustration">
+            <h1 class="text-light">Welcome <span class="text-warning">Back to OTS</span></h1>
+            <p>Test your skills. Challenge your limits. Achieve your goals.</p>
+        </div>
+    </div>
+
+    <!-- Right Side -->
+    <div class="login-right">
+        <div class="login-box">
+            <h2 class="text-light">Candidate <span class="text-warning">Login</span></h2>
+
+            {% if loginError %}
+            <div class="alert alert-danger text-center py-2">{{ loginError }}</div>
+            {% endif %}
+
+            <form action="{% url 'login' %}" method="POST">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label">Username</label>
+                    <input type="text" class="form-control" name="username" required placeholder="Enter your username">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-control" name="password" required
+                        placeholder="Enter your password">
+                </div>
+
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-warning fw-semibold me-2">Login</button>
+                    <button type="reset" class="btn btn-outline-light">Clear</button>
+                </div>
+            </form>
+
+            <p class="text-center mt-4 mb-0">
+                New User? <a href="{% url 'registrationForm' %}" class="fw-semibold">Register Here</a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

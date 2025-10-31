@@ -1,0 +1,290 @@
+{% extends "base.html" %}
+
+{% block title %}Online Testing System{% endblock %}
+
+{% block top %}
+<ul class="navbar-nav ms-auto">
+  <li class="nav-item mx-2">
+    <a class="nav-link" href="{% url 'welcome' %}">Home</a>
+  </li>
+  <li class="nav-item mx-2">
+    <a class="nav-link" href="{% url 'registrationForm' %}">Register</a>
+  </li>
+  <li class="nav-item mx-2">
+    <a class="nav-link" href="{% url 'login' %}">Login</a>
+  </li>
+</ul>
+{% endblock %}
+
+{% block content %}
+<!-- HERO SECTION -->
+<section
+  class="welcome-section text-center text-light d-flex flex-column justify-content-center align-items-center container-fluid">
+  <div class="overlay"></div>
+  <div class="welcome-text">
+    <h1 class="fw-bold mb-3">
+      Welcome to the <span class="text-warning">Online Testing System</span>
+    </h1>
+    <p class="lead mb-4">An interactive platform for smooth and efficient online examinations.</p>
+    <a href="{% url 'login' %}" class="btn btn-warning btn-lg fw-semibold px-4 py-2 rounded-3 shadow-sm">
+      Get Started
+    </a>
+  </div>
+</section>
+
+<!-- FEATURES SECTION -->
+<section class="features-section text-center text-light py-5">
+  <div class="container-fluid px-4 px-md-5">
+    <h2 class="fw-bold mb-5">Why Choose <span class="text-warning">OTS ?</span></h2>
+    <div class="row justify-content-center g-4">
+      <div class="col-md-3 col-sm-6">
+        <div class="feature-card p-4 h-100 rounded-4">
+          <i class="bi bi-laptop display-5 text-warning mb-3"></i>
+          <h5 class="text-warning">Fully Online</h5>
+          <p>Access tests anywhere, anytime, with a secure and reliable platform.</p>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6">
+        <div class="feature-card p-4 h-100 rounded-4">
+          <i class="bi bi-shield-check display-5 text-warning mb-3"></i>
+          <h5 class="text-warning">Secure & Fair</h5>
+          <p>Advanced protection ensures every test is monitored and fair for all users.</p>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6">
+        <div class="feature-card p-4 h-100 rounded-4">
+          <i class="bi bi-bar-chart-line display-5 text-warning mb-3"></i>
+          <h5 class="text-warning">Instant Results</h5>
+          <p>Get instant, accurate grading and detailed performance analytics.</p>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6">
+        <div class="feature-card p-4 h-100 rounded-4">
+          <i class="bi bi-emoji-smile display-5 text-warning mb-3"></i>
+          <h5 class="text-warning">Easy to Use</h5>
+          <p>Simple and intuitive interface designed for students and teachers alike.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS SECTION -->
+<section class="how-section text-light">
+  <div class="container-fluid px-4 px-md-5 py-5">
+    <div class="row align-items-center g-4">
+      <div class="col-md-6">
+        <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1600&q=80"
+          class="img-fluid rounded-4 shadow-lg" alt="Online Exam Process">
+      </div>
+      <div class="col-md-6">
+        <h2 class="fw-bold mb-4">How It <span class="text-warning">Works</span></h2>
+        <div class="d-flex align-items-start mb-4">
+          <div class="step-number me-3">1</div>
+          <div>
+            <h5 class="text-warning">Register</h5>
+            <p>Create your account and get instant access to tests.</p>
+          </div>
+        </div>
+        <div class="d-flex align-items-start mb-4">
+          <div class="step-number me-3">2</div>
+          <div>
+            <h5 class="text-warning">Take Test</h5>
+            <p>Choose your subject and start your test securely.</p>
+          </div>
+        </div>
+        <div class="d-flex align-items-start">
+          <div class="step-number me-3">3</div>
+          <div>
+            <h5 class="text-warning">View Results</h5>
+            <p>Check instant feedback and performance analytics.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA SECTION -->
+<section class="cta-section text-center text-light">
+  <div class="container-fluid py-5 px-4 px-md-5">
+    <h2 class="fw-bold mb-3">Ready to Begin Your <span class="text-warning">Test Journey ?</span></h2>
+    <p class="lead mb-4">Sign up today and experience the next generation of online testing.</p>
+    <a href="{% url 'registrationForm' %}" class="btn btn-warning btn-lg fw-semibold px-4 py-2 rounded-3 shadow-sm">
+      Register Now
+    </a>
+  </div>
+</section>
+
+<!-- PAGE CSS -->
+<style>
+  /* HERO */
+  .welcome-section {
+    position: relative;
+    min-height: 85vh;
+    width: 100%;
+    background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.8)),
+      url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+    /* overflow: hidden; */
+  }
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+  }
+
+  .welcome-text {
+    position: relative;
+    z-index: 2;
+    max-width: 850px;
+    padding: 2rem;
+  }
+
+  .welcome-text h1,
+  .welcome-text p,
+  .welcome-text a {
+    opacity: 0;
+    animation: fadeUp 1s ease-out forwards;
+  }
+
+  .welcome-text h1 {
+    animation-delay: 0.2s;
+  }
+
+  .welcome-text p {
+    animation-delay: 0.5s;
+  }
+
+  .welcome-text a {
+    animation-delay: 0.8s;
+  }
+
+
+  /* BUTTONS */
+  .btn-warning {
+    background: linear-gradient(45deg, #ff6600, #ff9d00);
+    border: none;
+    transition: all 0.3s ease;
+  }
+
+  .btn-warning:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 20px rgba(255, 102, 0, 0.6);
+  }
+
+  /* FEATURES */
+  .features-section {
+    background: #111;
+    width: 100%;
+  }
+
+  .feature-card {
+    background: #1a1a1a;
+    border: 1px solid #222;
+    transition: all 0.3s ease;
+  }
+
+  .feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 15px rgba(255, 102, 0, 0.4);
+  }
+
+  /* HOW IT WORKS */
+  .how-section {
+    background: #111;
+    width: 100%;
+  }
+
+  .step-number {
+    background: linear-gradient(45deg, #ff6600, #ff9d00);
+    color: #fff;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    font-weight: 700;
+    font-size: 1.3rem;
+    border-radius: 50%;
+    text-align: center;
+  }
+
+  /* CTA */
+  .cta-section {
+    background: #111;
+    width: 100%;
+  }
+
+  /* --- Hero Section Animations --- */
+  @keyframes fadeUp {
+    0% {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+
+  /* RESPONSIVE */
+  @media (max-width: 992px) {
+    .welcome-text h1 {
+      font-size: 2.2rem;
+    }
+
+    .welcome-text p {
+      font-size: 1rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .feature-card {
+      padding: 1.5rem;
+    }
+
+    .how-section .col-md-6 img {
+      margin-bottom: 20px;
+    }
+
+    .how-section .col-md-6 h2 {
+      text-align: center;
+    }
+
+    .step-number {
+      width: 77px;
+      height: 50px;
+      line-height: 50px;
+      font-size: 1.2rem;
+      border-radius: 50%;
+      text-align: center;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .welcome-text h1 {
+      font-size: 1.8rem;
+    }
+
+    .lead {
+      font-size: 0.9rem;
+    }
+
+    .feature-card p {
+      font-size: 0.9rem;
+    }
+
+    .cta-section h2 {
+      font-size: 1.5rem;
+    }
+
+    .cta-section p {
+      font-size: 0.95rem;
+    }
+  }
+</style>
+{% endblock %}

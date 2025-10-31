@@ -1,0 +1,370 @@
+{% extends "base.html" %}
+
+{% block title %}OTS - Dashboard{% endblock %}
+
+{% block top %}
+<ul class="navbar-nav">
+  <li class="nav-item mx-2">
+    <a class="nav-link active text-warning fw-semibold" href="{% url 'home' %}">Dashboard</a>
+  </li>
+  <li class="nav-item mx-2">
+    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+  </li>
+</ul>
+{% endblock %}
+
+{% block content %}
+<section class="dashboard-section text-light">
+  <div class="container py-5">
+
+    <!-- Hero Section -->
+    <div class="hero text-center mb-5">
+      <h1 class="fw-bold mb-3 fade-in">
+        Welcome <span class="text-warning">{{ request.session.name }}</span> 👋
+      </h1>
+      <p class="lead text-secondary mb-4 fade-in-delay">
+        Ready to take your next step toward excellence? Choose your challenge and start now!
+      </p>
+      <a href="{% url 'testPaper' %}?n=10" class="btn btn-warning btn-lg px-5 me-2">Start Quick Test</a>
+      <a href="{% url 'testHistory' %}" class="btn btn-outline-light btn-lg px-5">View History</a>
+    </div>
+
+    <!-- Test Options Grid -->
+    <!-- Test Options Grid -->
+    <div class="test-grid row g-4 justify-content-center mb-5">
+      <div class="d-flex flex-wrap justify-content-center gap-4">
+        <a href="{% url 'testPaper' %}?n=3" class="test-btn-card">
+          <h5>Test of 3 Qs</h5>
+          <p>Quick Warm-Up</p>
+        </a>
+        <a href="{% url 'testPaper' %}?n=7" class="test-btn-card">
+          <h5>Test of 7 Qs</h5>
+          <p>Short Practice</p>
+        </a>
+        <a href="{% url 'testPaper' %}?n=10" class="test-btn-card">
+          <h5>Test of 10 Qs</h5>
+          <p>Focused Session</p>
+        </a>
+        <a href="{% url 'testPaper' %}?n=15" class="test-btn-card">
+          <h5>Test of 15 Qs</h5>
+          <p>Skill Builder</p>
+        </a>
+        <a href="{% url 'testPaper' %}?n=25" class="test-btn-card">
+          <h5>Test of 25 Qs</h5>
+          <p>Challenge Mode</p>
+        </a>
+        <a href="{% url 'testPaper' %}?n=35" class="test-btn-card">
+          <h5>Test of 35 Qs</h5>
+          <p>Advanced Drill</p>
+        </a>
+        <a href="{% url 'testPaper' %}?n=50" class="test-btn-card">
+          <h5>Test of 50 Qs</h5>
+          <p>Master Marathon</p>
+        </a>
+        <a href="{% url 'testHistory' %}" class="test-btn-card history">
+          <h5>📜 View History</h5>
+          <p>See Past Results</p>
+        </a>
+      </div>
+    </div>
+
+
+    <div class="progress-section text-center mb-5">
+      <h3 class="fw-bold mb-3">Your Progress <span class="text-warning">Overview</span></h3>
+      <div class="d-flex flex-wrap justify-content-center gap-4">
+
+        <div class="stat-box">
+          <h2 class="text-warning fw-bold">
+            {{ request.session.name|default:"User" }}
+          </h2>
+          <p class="text-secondary" style="color: #bbb;">Candidate</p>
+        </div>
+
+        <div class="stat-box">
+          <h2 class="text-warning fw-bold">
+            {{ request.session.test_attempted|default:"0" }}
+          </h2>
+          <p class="text-secondary" style="color: #bbb;">Tests Attempted</p>
+        </div>
+
+        <div class="stat-box">
+          {% if request.session.test_attempted|default:0 > 0 %}
+          <h2 class="text-warning fw-bold">
+            {{ request.session.points|default:"0" }}/10
+          </h2>
+          {% else %}
+          <h2 class="text-warning fw-bold">0</h2>
+          {% endif %}
+          <p class="text-secondary" style="color: #bbb;">Average Score</p>
+        </div>
+
+      </div>
+    </div>
+
+
+
+    <!-- Motivation Quotes -->
+    <div class="quote-section text-center my-5">
+      <blockquote id="quote" class="fs-4 fst-italic text-light">
+        “Practice doesn’t make perfect — it makes progress.”
+      </blockquote>
+    </div>
+
+    <!-- Stats Section -->
+    <div class="stats-section text-center my-5">
+      <h3 class="fw-bold mb-4">Platform <span class="text-warning">Highlights</span></h3>
+      <div class="d-flex flex-wrap justify-content-center gap-4">
+        <div class="stat-box">
+          <h2 class="text-warning fw-bold">10K+</h2>
+          <p class="text-secondary mb-0">Tests Attempted</p>
+        </div>
+        <div class="stat-box">
+          <h2 class="text-warning fw-bold">5K+</h2>
+          <p class="text-secondary mb-0">Active Users</p>
+        </div>
+        <div class="stat-box">
+          <h2 class="text-warning fw-bold">100%</h2>
+          <p class="text-secondary mb-0">Instant Results</p>
+        </div>
+        <div class="stat-box">
+          <h2 class="text-warning fw-bold">24/7</h2>
+          <p class="text-secondary mb-0">Availability</p>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- CTA -->
+    <div class="cta text-center my-5">
+      <h3 class="fw-bold mb-3">Ready to <span class="text-warning">Level Up?</span></h3>
+      <p class="text-secondary mb-4">Push your limits and take the challenge — show what you’ve learned!</p>
+      <a href="{% url 'testPaper' %}?n=25" class="btn btn-warning btn-lg px-5">Take a Challenge Test</a>
+    </div>
+
+</section>
+
+<style>
+  .dashboard-section {
+    background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.9)),
+      url('https://plus.unsplash.com/premium_photo-1688821128515-f5f20dc60a63?fm=jpg&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cGVyc29uJTIwYXQlMjBjb21wdXRlcnxlbnwwfHwwfHx8MA%3D%3D&ixlib=rb-4.1.0&q=60&w=1600') center/cover no-repeat;
+    min-height: 100vh;
+  }
+
+  /* Animations */
+  [data-animate] {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.1s ease-out;
+  }
+
+  [data-animate].visible {
+    opacity: 1.5;
+    transform: translateY(0);
+  }
+
+  .fade-in {
+    animation: fadeIn 1s ease-out;
+  }
+
+  .fade-in-delay {
+    animation: fadeIn 1s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* Test Cards */
+  .test-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 1rem;
+    backdrop-filter: blur(8px);
+    transition: all 0.3s ease;
+  }
+
+  .test-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 0 25px rgba(255, 150, 0, 0.4);
+  }
+
+  /* Test Buttons Styled Like Stat Boxes */
+  .test-btn-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 25px 35px;
+    min-width: 180px;
+    transition: all 0.35s ease;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 0 10px rgba(255, 153, 0, 0.05);
+  }
+
+  .test-btn-card h5 {
+    margin: 0;
+    font-weight: 700;
+    color: #ffb13d;
+    font-size: 1.1rem;
+  }
+
+  .test-btn-card p {
+    margin: 5px 0 0;
+    color: #bbb;
+    font-size: 0.9rem;
+  }
+
+  .test-btn-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 0 25px rgba(255, 170, 0, 0.4);
+    border-color: rgba(255, 170, 0, 0.5);
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .test-btn-card.history {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px dashed rgba(255, 255, 255, 0.2);
+  }
+
+  .test-btn-card.history:hover {
+    border-style: solid;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .test-btn-card {
+      min-width: 140px;
+      padding: 20px 25px;
+    }
+  }
+
+  .progress-section .stat-box {
+    min-width: 160px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 25px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+  }
+
+  .progress-section .stat-box:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 0 25px rgba(255, 150, 0, 0.3);
+  }
+
+  /* Stats Section - matching Progress Overview style */
+
+  .stats-section .stat-box {
+    min-width: 160px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 25px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+  }
+
+  .stats-section .stat-box:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 0 25px rgba(255, 150, 0, 0.3);
+  }
+
+  /* CTA Section (Now styled same as Quote Box) */
+
+
+  @media (max-width: 992px) {
+    .hero {
+      padding: 0 20px;
+    }
+
+    .test-card {
+      margin-bottom: 20px;
+    }
+  }
+
+  /* Dashboard Section Spacing */
+  .dashboard-section .container>* {
+    margin-bottom: 80px;
+    /* Adds vertical spacing between each major section */
+  }
+
+  /* Reduce spacing for small screens */
+  @media (max-width: 768px) {
+    .dashboard-section .container>* {
+      margin-bottom: 50px;
+    }
+  }
+
+  /* Optional: give subtle separation lines between sections */
+  .dashboard-section .container>*:not(:last-child) {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-bottom: 60px;
+  }
+
+  /* Slight fade transition between sections on scroll */
+  .dashboard-section [data-animate] {
+    scroll-margin-top: 100px;
+    transition: all 0.8s ease-out;
+  }
+
+  @media (max-width: 576px) {
+    .hero .btn {
+      display: block;
+      width: 100%;
+      margin: 8px 0 !important;
+    }
+  }
+
+  /* Responsive background fix */
+  @media (max-width: 992px) {
+    .dashboard-section {
+      background-position: center top;
+      background-attachment: scroll;
+      background-size: cover;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .dashboard-section {
+      background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.95)),
+        url('https://plus.unsplash.com/premium_photo-1688821128515-f5f20dc60a63?fm=jpg&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cGVyc29uJTIwYXQlMjBjb21wdXRlcnxlbnwwfHwwfHx8MA%3D%3D&ixlib=rb-4.1.0&q=60&w=1600');
+      background-position: center;
+      background-size: cover;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener("scroll", () => {
+    document.querySelectorAll("[data-animate]").forEach(el => {
+      if (el.getBoundingClientRect().top < window.innerHeight - 100) {
+        el.classList.add("visible");
+      }
+    });
+  });
+
+  // Quotes rotation
+  const quotes = [
+    "“Practice doesn’t make perfect — it makes progress.”",
+    "“Your future is created by what you do today, not tomorrow.”",
+    "“Small steps every day lead to big results.”",
+    "“Success is the sum of small efforts repeated daily.”"
+  ];
+  let i = 0;
+  setInterval(() => {
+    i = (i + 1) % quotes.length;
+    document.getElementById("quote").textContent = quotes[i];
+  }, 5000);
+</script>
+{% endblock %}

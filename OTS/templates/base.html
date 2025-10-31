@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Open+Sans&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            padding: 0;
+            background-color: #111;
+            color: #fff;
+            font: 15px "Open Sans", sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            margin: auto;
+            display: flex;
+            flex-flow: column nowrap;
+            justify-content: space-between;
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            background-color: #111;
+            padding: 0.75rem 2rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+        }
+
+        .logo-badge {
+            background: linear-gradient(45deg, #ff6600, #ff9d00);
+            -webkit-text-fill-color: #fff;
+            font-weight: 700;
+            border-radius: 50%;
+            width: 55px;
+            height: 55px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 10px rgba(255, 153, 0, 0.4);
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .navbar-brand {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 1.6rem;
+            background: linear-gradient(45deg, #ff6600, #ff9d00);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 0.1rem;
+        }
+
+        .navbar-brand::before {
+            content: " ";
+            position: absolute;
+            left: -10px;
+            top: -6px;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 102, 0, 0.15);
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        .navbar-toggler {
+            border: none !important;
+            outline: none !important;
+            box-shadow: none !important;
+            padding: 6px 10px;
+            margin-right: 10px;
+        }
+
+        .nav-link {
+            color: #ccc !important;
+            position: relative;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -4px;
+            width: 0;
+            height: 2px;
+            background-color: #ff6600;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #fff !important;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* 🔹 Mobile view (menu opens below) */
+        @media (max-width: 991.98px) {
+            .navbar-collapse {
+                position: absolute;
+                top: 100%;
+                right: 0;
+                width: 100%;
+                background-color: #111;
+                text-align: center;
+                padding: 1rem 0.5rem;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+                z-index: 1000;
+            }
+        }
+
+        /* 🔹 Desktop view (inline links, normal position) */
+        @media (min-width: 992px) {
+            .navbar-collapse {
+                position: static !important;
+                width: auto !important;
+                background: none !important;
+                padding: 0 !important;
+                border: none !important;
+            }
+        }
+
+
+        /* Adjust spacing for smaller screens */
+        @media (max-width: 992px) {
+            .navbar {
+                padding: 0.75rem 1.2rem;
+                /* reduce but keep nice side gaps */
+            }
+
+            .navbar .container-fluid {
+                flex-wrap: nowrap !important;
+            }
+
+            .navbar-toggler {
+                margin-left: auto;
+            }
+        }
+
+        /* Content */
+        .content {
+            padding: 2rem 3rem;
+            min-height: 70vh;
+        }
+
+        /* Footer */
+        ul {
+            list-style: none;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .generic-anchor {
+            color: #ff9d00;
+        }
+
+        .generic-anchor:visited {
+            color: #8DB9ED;
+        }
+
+        .generic-anchor:hover {
+            color: #ccc;
+        }
+
+        .flex-rw {
+            display: flex;
+            flex-flow: row wrap;
+        }
+
+        footer {
+            border-top: 1px solid #ccc;
+            background: #111;
+            margin-top: auto;
+            width: 100%;
+            padding: 2rem 3rem;
+        }
+
+        .footer-list-top {
+            width: 33.333%;
+        }
+
+        .footer-list-top>li {
+            text-align: center;
+            padding-bottom: 10px;
+        }
+
+        .footer-list-header {
+            padding: 10px 0 5px 0;
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+
+        .footer-list-anchor {
+            font-size: 0.95rem;
+            color: #fff;
+        }
+
+        .footer-social-section {
+            width: 100%;
+            align-items: center;
+            justify-content: space-around;
+            position: relative;
+            margin-top: 5px;
+        }
+
+        .footer-social-section::after {
+            content: "";
+            position: absolute;
+            z-index: 1;
+            top: 50%;
+            left: 10px;
+            border-top: 1px solid #ccc;
+            width: calc(100% - 20px);
+        }
+
+        .footer-social-overlap {
+            position: relative;
+            z-index: 2;
+            background: #111;
+            padding: 0 20px;
+        }
+
+        .footer-social-connect {
+            display: flex;
+            align-items: center;
+            font-size: 1.4rem;
+            color: #fff;
+        }
+
+        .footer-social-small {
+            font-size: 0.7em;
+            padding: 0px 10px;
+        }
+
+        .footer-social-overlap>a {
+            font-size: 1.6rem;
+        }
+
+        .footer-social-overlap>a:not(:first-child) {
+            margin-left: 0.5rem;
+        }
+
+        .footer-bottom-section {
+            width: 100%;
+            padding: 10px;
+            border-top: 1px solid #ccc;
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-bottom-wrapper {
+            font-size: 0.9rem;
+            color: #fff;
+        }
+
+        .footer-address {
+            display: inline;
+            font-style: normal;
+        }
+
+        /* Responsive Tweaks */
+        @media (max-width: 992px) {
+            .footer-list-top {
+                width: 50%;
+            }
+
+            .footer-list-header {
+                font-size: 1.2rem;
+            }
+
+            .footer-list-anchor {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 1.5rem;
+            }
+
+            .footer-list-top {
+                width: 100%;
+            }
+
+            .footer-list-header {
+                font-size: 1.1rem;
+            }
+
+            .footer-list-anchor {
+                font-size: 0.85rem;
+            }
+
+            .footer-social-connect {
+                font-size: 1.2rem;
+            }
+
+            .footer-social-overlap>a {
+                font-size: 1.4rem;
+            }
+
+            .footer-bottom-wrapper {
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar-brand {
+                font-size: 1.2rem;
+            }
+
+            .footer-social-connect {
+                font-size: 1rem;
+            }
+
+            .footer-list-header {
+                font-size: 1rem;
+            }
+
+            .footer-list-anchor {
+                font-size: 0.8rem;
+            }
+
+            .footer-bottom-wrapper {
+                font-size: 0.75rem;
+                text-align: center;
+            }
+
+            .footer-social-overlap {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark px-3 px-md-5">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+
+            <!-- Left: Brand -->
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <div class="logo-badge me-2">OTS</div>
+                <span class="logo-text">Online Testing System</span>
+            </a>
+
+            <!-- Right: Toggler -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+                aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Collapsible Links -->
+            <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
+                {% block top %}{% endblock %}
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Footer -->
+    <footer class="flex-rw container-fluid">
+
+        <ul class="footer-list-top">
+            <li>
+                <h4 class="footer-list-header text-warning">About OTS</h4>
+            </li>
+            <li><a href="#" class="generic-anchor footer-list-anchor text-light">ABOUT US</a></li>
+            <li><a href="#" class="generic-anchor footer-list-anchor text-light">SERVICES</a></li>
+            <li><a href="#" class="generic-anchor footer-list-anchor text-light">CAREERS</a></li>
+            <li><a href="#" class="generic-anchor footer-list-anchor text-light">EVENTS</a></li>
+        </ul>
+
+        <ul class="footer-list-top">
+            <li>
+                <h4 class="footer-list-header text-warning">Resources</h4>
+            </li>
+            <li><a href="#" class="generic-anchor footer-list-anchor text-light">HELP CENTER</a></li>
+            <li><a href="#" class="generic-anchor footer-list-anchor text-light">FAQ</a></li>
+            <li><a href="#" class="generic-anchor footer-list-anchor text-light">GUIDES</a></li>
+            <li><a href="#" class="generic-anchor footer-list-anchor text-light">CONTACT SUPPORT</a></li>
+        </ul>
+
+        <ul class="footer-list-top">
+            <li>
+                <h4 class="footer-list-header text-warning">Contact Us</h4>
+            </li>
+            <li><a href="mailto:contact@ots.com" class="generic-anchor footer-list-anchor">EMAIL</a></li>
+            <li><a href="https://www.linkedin.com" class="generic-anchor footer-list-anchor"
+                    target="_blank">LINKEDIN</a></li>
+            <li><a href="https://github.com" class="generic-anchor footer-list-anchor" target="_blank">GITHUB</a></li>
+            <li><a href="https://instagram.com" class="generic-anchor footer-list-anchor" target="_blank">INSTAGRAM</a>
+            </li>
+        </ul>
+
+        <section class="footer-social-section flex-rw">
+            <span class="footer-social-overlap footer-social-connect text-warning">
+                CONNECT <span class="footer-social-small text-warning">with</span> US
+            </span>
+            <span class="footer-social-overlap footer-social-icons-wrapper">
+                <a href="https://www.linkedin.com" class="generic-anchor" target="_blank" title="LinkedIn"><i
+                        class="fab fa-linkedin"></i></a>
+                <a href="https://github.com" class="generic-anchor" target="_blank" title="GitHub"><i
+                        class="fab fa-github"></i></a>
+                <a href="https://instagram.com" class="generic-anchor" target="_blank" title="Instagram"><i
+                        class="fab fa-instagram"></i></a>
+                <a href="mailto:contact@ots.com" class="generic-anchor" target="_blank" title="Email"><i
+                        class="fa-solid fa-envelope"></i></a>
+            </span>
+        </section>
+
+        <section class="footer-bottom-section flex-rw">
+            <div class="footer-bottom-wrapper">
+                <i class="fa fa-copyright"></i> 2025 OTS — All Rights Reserved
+            </div>
+            <div class="footer-bottom-wrapper">
+                <a href="/admin" class="generic-anchor text-light" rel="nofollow">Admin</a>
+            </div>
+        </section>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
