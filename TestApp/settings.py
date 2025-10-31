@@ -5,7 +5,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get('SECRET_KEY', 'fallback-secret-key')
 DEBUG = True
-ALLOWED_HOSTS = ["ots-project.onrender.com"]
+ALLOWED_HOSTS = ["ots-project.onrender.com",'*']
 
 INSTALLED_APPS = [
     'jazzmin',
@@ -82,11 +82,12 @@ JAZZMIN_SETTINGS = {
     "site_title": "OTS Admin",
     "site_header": "Online Test System",
     "site_brand": "OTS Control Panel",
+    "site_url": "/admin/",
     "welcome_sign": "Welcome to OTS Administration",
     "copyright": "© 2025 OTS",
     "show_ui_builder": False,
     "topmenu_links": [
-        {"name": "Home", "url": "/", "permissions": ["auth.view_user"]},
+        {"name": "Home", "url": "/admin/", "permissions": ["auth.view_user"]},
         {"model": "auth.User"},
         {"app": "OTS"},
     ],

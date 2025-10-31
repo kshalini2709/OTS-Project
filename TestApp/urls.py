@@ -17,10 +17,9 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
-from django.shortcuts import redirect
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("OTS/", include("OTS.urls")),
-    path('', lambda request: redirect('/admin/')),
+    path("", include("OTS.urls")),  # base URL opens OTS homepage
 ]
